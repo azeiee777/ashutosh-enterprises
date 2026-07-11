@@ -22,3 +22,5 @@ $q = DailyLabourSupply::with(['client', 'site'])
 echo $q->toSql() . "\n";
 echo "Bindings: " . json_encode($q->getBindings()) . "\n";
 echo "Count: " . $q->count() . "\n";
+
+echo "test-deployment"
