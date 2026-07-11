@@ -1,4 +1,4 @@
-name: Deploy to Hostinger VPS
+name: Deploy to Hostinger
 
 on:
   push:
@@ -32,31 +32,30 @@ jobs:
           npm install
           npm run build
 
-      - name: Deploy to VPS using SSH and Rsync
-        uses: easingthemes/ssh-deploy@main
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.VPS_SSH_KEY }}
-          ARGS: "-rltgoDzvO"
-          SOURCE: "./"
-          REMOTE_HOST: ${{ secrets.VPS_HOST }}
-          REMOTE_USER: ${{ secrets.VPS_USERNAME }}
-          REMOTE_PORT: ${{ secrets.VPS_PORT || '22' }}
-          TARGET: ${{ secrets.VPS_PATH }}
-          EXCLUDE: "/node_modules/, /.git/, /.github/, /.env, /tests/"
+      - name: Deploy to Hostinger using Rsync
+        run: |
+          sudo apt-get update && sudo apt-get install -y sshpass rsync
+          sshpass -p "${{ secrets.HOST_PASSWORD }}" rsync -rltgoDzvO \
+            --exclude="/node_modules/" \
+            --exclude="/.git/" \
+            --exclude="/.github/" \
+            --exclude="/.env" \
+            --exclude="/tests/" \
+            -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.HOST_PORT }}" \
+            ./ ${{ secrets.HOST_USERNAME }}@${{ secrets.HOST_IP }}:${{ secrets.HOST_PATH }}
 
-      - name: Execute Post-Deployment Scripts on VPS
+      - name: Execute Post-Deployment Scripts
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USERNAME }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          port: ${{ secrets.VPS_PORT || '22' }}
+          host: ${{ secrets.HOST_IP }}
+          username: ${{ secrets.HOST_USERNAME }}
+          password: ${{ secrets.HOST_PASSWORD }}
+          port: ${{ secrets.HOST_PORT }}
           script: |
-            cd ${{ secrets.VPS_PATH }}
+            cd ${{ secrets.HOST_PATH }}
             
-            # Ensure permissions are correct
-            chown -R www-data:www-data . || echo "Skipping chown (requires root/sudo)"
-            chmod -R 775 storage bootstrap/cache
+            # Ensure storage has correct permissions (Hostinger shared hosting usually handles this, but just in case)
+            chmod -R 775 storage bootstrap/cache || true
             
             # Run Laravel optimizations
             php artisan optimize:clear
@@ -65,7 +64,4 @@ jobs:
             php artisan view:cache
             
             # Run migrations automatically
-            php artisan migrate --force
-            
-            # Restart horizon/queue if you have them (uncomment if needed)
-            # php artisan queue:restart
+            php artisan migrate --force || echo "Migration failed, please check database connection"
