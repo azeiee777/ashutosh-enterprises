@@ -15,8 +15,11 @@
         {{-- Sidebar --}}
         <aside class="admin-sidebar" id="sidebar">
             <a href="{{ route('admin.dashboard') }}" class="sidebar-brand">
-                <div class="brand-icon">A</div>
-                <span>Ashutosh</span>
+                <div class="brand-icon">AE</div>
+                <div class="brand-text" style="display: flex; flex-direction: column; line-height: 1;">
+                    <span>Ashutosh</span>
+                    <small style="font-size: 0.55em; font-weight: 500; opacity: 0.7; letter-spacing: 1px; text-transform: uppercase;">Enterprises</small>
+                </div>
             </a>
             <nav class="sidebar-nav">
                 <a href="{{ route('admin.dashboard') }}" class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">

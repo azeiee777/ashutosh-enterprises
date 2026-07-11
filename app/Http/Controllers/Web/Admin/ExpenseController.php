@@ -11,14 +11,45 @@ class ExpenseController extends Controller
 {
     public function index()
     {
-        $expenses = Expense::when(request('date_from'), fn($q, $d) => $q->where('date', '>=', $d))
-            ->when(request('date_to'), fn($q, $d) => $q->where('date', '<=', $d))
+        $expenses = Expense::when(request('date_from'), fn($q, $d) => $q->whereDate('date', '>=', $d))
+            ->when(request('date_to'), fn($q, $d) => $q->whereDate('date', '<=', $d))
             ->when(request('category'), fn($q, $c) => $q->byCategory($c))
             ->orderBy('date', 'desc')
             ->paginate(20)
             ->withQueryString();
 
         return view('admin.expenses.index', compact('expenses'));
+    }
+
+    public function exportPdf()
+    {
+        $data = Expense::when(request('date_from'), fn($q, $d) => $q->whereDate('date', '>=', $d))
+            ->when(request('date_to'), fn($q, $d) => $q->whereDate('date', '<=', $d))
+            ->when(request('category'), fn($q, $c) => $q->byCategory($c))
+            ->orderBy('date', 'desc')
+            ->get();
+
+        $type = 'expense';
+        $filters = request()->only(['date_from', 'date_to', 'category']);
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('admin.reports.pdf', compact('data', 'type', 'filters'))
+            ->setPaper('a4', 'landscape');
+
+        return $pdf->download("expenses_" . date('Ymd_His') . ".pdf");
+    }
+
+    public function export()
+    {
+        $data = Expense::when(request('date_from'), fn($q, $d) => $q->whereDate('date', '>=', $d))
+            ->when(request('date_to'), fn($q, $d) => $q->whereDate('date', '<=', $d))
+            ->when(request('category'), fn($q, $c) => $q->byCategory($c))
+            ->orderBy('date', 'desc')
+            ->get();
+
+        return \Maatwebsite\Excel\Facades\Excel::download(
+            new \App\Exports\ExpenseExport($data), 
+            "expenses_" . date('Ymd_His') . ".xlsx"
+        );
     }
 
     public function create()

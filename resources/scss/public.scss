@@ -171,16 +171,6 @@ h1, h2, h3, h4, h5, h6 {
         animation: float 6s ease-in-out infinite;
     }
 
-    &::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 120px;
-        background: linear-gradient(to top, $white, transparent);
-    }
-
     .hero-badge {
         display: inline-flex;
         align-items: center;
@@ -223,41 +213,6 @@ h1, h2, h3, h4, h5, h6 {
         animation: fadeInUp 0.6s ease-out 0.3s both;
     }
 
-    .btn-hero-primary {
-        background: $accent;
-        color: $primary;
-        border: none;
-        padding: 0.875rem 2rem;
-        border-radius: 50px;
-        font-weight: 700;
-        font-size: 1rem;
-        transition: all 0.3s;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-
-        &:hover {
-            background: $accent-dark;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba($accent, 0.3);
-        }
-    }
-
-    .btn-hero-secondary {
-        background: transparent;
-        color: $white;
-        border: 2px solid rgba($white, 0.3);
-        padding: 0.875rem 2rem;
-        border-radius: 50px;
-        font-weight: 600;
-        transition: all 0.3s;
-
-        &:hover {
-            border-color: $white;
-            background: rgba($white, 0.1);
-        }
-    }
-
     .hero-stats {
         display: flex;
         gap: 2.5rem;
@@ -275,10 +230,55 @@ h1, h2, h3, h4, h5, h6 {
                 color: $accent;
             }
             .stat-label {
-                color: $text-light;
+                color: $white;
+                opacity: 0.9;
                 font-size: 0.875rem;
+                font-weight: 500;
             }
         }
+    }
+}
+
+// ===== Global Buttons =====
+.btn-hero-primary {
+    background: $accent;
+    color: $primary;
+    border: none;
+    padding: 0.875rem 2rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+
+    &:hover {
+        background: $accent-dark;
+        color: $primary;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba($accent, 0.3);
+    }
+}
+
+.btn-hero-secondary {
+    background: transparent;
+    color: $white;
+    border: 2px solid rgba($white, 0.3);
+    padding: 0.875rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &:hover {
+        border-color: $white;
+        color: $primary;
+        background: $white;
     }
 }
 

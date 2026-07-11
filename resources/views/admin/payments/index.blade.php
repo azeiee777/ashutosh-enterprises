@@ -26,6 +26,11 @@
         </select>
         <button class="btn btn-admin-secondary">Filter</button>
         @if(request()->hasAny(['date_from','date_to','client_id','payment_head']))<a href="{{ route('admin.payments.index') }}" class="btn btn-outline-secondary">Clear</a>@endif
+        
+        <div class="ms-auto d-flex gap-2">
+            <a href="{{ route('admin.payments.export', request()->query()) }}" class="btn btn-success"><i class="bi bi-file-earmark-spreadsheet"></i> Export Excel</a>
+            <a href="{{ route('admin.payments.export_pdf', request()->query()) }}" class="btn btn-danger" target="_blank"><i class="bi bi-file-earmark-pdf"></i> Export PDF</a>
+        </div>
     </form>
 </div>
 
@@ -42,7 +47,14 @@
                 @foreach($payments as $payment)
                 <tr>
                     <td><strong>{{ $payment->date->format('d M Y') }}</strong></td>
-                    <td><a href="{{ route('admin.clients.show', $payment->client) }}" class="text-decoration-none">{{ $payment->client->company_name }}</a><br><small class="text-muted">{{ $payment->site?->site_name ?? 'N/A' }}</small></td>
+                    <td>
+                        @if($payment->client)
+                            <a href="{{ route('admin.clients.show', $payment->client) }}" class="text-decoration-none">{{ $payment->client->company_name }}</a>
+                        @else
+                            <span class="text-muted">-</span>
+                        @endif
+                        <br><small class="text-muted">{{ $payment->site?->site_name ?? 'N/A' }}</small>
+                    </td>
                     <td><span class="badge {{ $payment->payment_head->value == 'advance' ? 'bg-warning text-dark' : 'bg-success' }}">{{ $payment->payment_head->label() }}</span></td>
                     <td><strong>{{ number_format($payment->amount, 2) }}</strong></td>
                     <td>{{ $payment->payment_method->label() }}</td>

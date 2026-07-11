@@ -67,7 +67,7 @@ class DashboardService
             ->get();
 
         return [
-            'labels' => $data->pluck('payment_head')->map(fn($h) => \App\Enums\PaymentHead::tryFrom($h)?->label() ?? $h)->toArray(),
+            'labels' => $data->pluck('payment_head')->map(fn($h) => $h instanceof \App\Enums\PaymentHead ? $h->label() : (\App\Enums\PaymentHead::tryFrom($h)?->label() ?? $h))->toArray(),
             'data' => $data->pluck('total')->toArray(),
         ];
     }

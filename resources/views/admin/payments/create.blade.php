@@ -10,8 +10,8 @@
         <div class="row g-3">
             <div class="col-md-4"><label class="form-label">Date *</label><input type="date" name="date" class="form-control" required value="{{ old('date', date('Y-m-d')) }}"></div>
             <div class="col-md-4">
-                <label class="form-label">Client *</label>
-                <select name="client_id" id="clientSelect" class="form-select" required x-on:change="loadSites($event.target.value)">
+                <label class="form-label">Client (Optional)</label>
+                <select name="client_id" id="clientSelect" class="form-select" x-on:change="loadSites($event.target.value)">
                     <option value="">Select Client</option>
                     @foreach($clients as $client)
                         <option value="{{ $client->id }}" {{ old('client_id') == $client->id ? 'selected' : '' }}>{{ $client->company_name }}</option>
@@ -30,17 +30,17 @@
             </div>
 
             <div class="col-md-4">
-                <label class="form-label">Payment Head *</label>
-                <select name="payment_head" class="form-select" required>
+                <label class="form-label">Payment Head (Optional)</label>
+                <select name="payment_head" class="form-select">
                     @foreach(\App\Enums\PaymentHead::cases() as $head)
                         <option value="{{ $head->value }}" {{ old('payment_head') == $head->value ? 'selected' : '' }}>{{ $head->label() }}</option>
                     @endforeach
                 </select>
             </div>
-            <div class="col-md-4"><label class="form-label">Amount (₹) *</label><input type="number" step="0.01" name="amount" class="form-control" required value="{{ old('amount') }}">@error('amount')<small class="text-danger">{{ $message }}</small>@enderror</div>
+            <div class="col-md-4"><label class="form-label">Amount (₹) (Optional)</label><input type="number" step="0.01" name="amount" class="form-control" value="{{ old('amount', 0) }}">@error('amount')<small class="text-danger">{{ $message }}</small>@enderror</div>
             <div class="col-md-4">
-                <label class="form-label">Payment Method *</label>
-                <select name="payment_method" class="form-select" required>
+                <label class="form-label">Payment Method (Optional)</label>
+                <select name="payment_method" class="form-select">
                     @foreach(\App\Enums\PaymentMethod::cases() as $method)
                         <option value="{{ $method->value }}" {{ old('payment_method') == $method->value ? 'selected' : '' }}>{{ $method->label() }}</option>
                     @endforeach

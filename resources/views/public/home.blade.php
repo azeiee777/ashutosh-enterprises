@@ -267,7 +267,7 @@
             <a href="{{ route('contact') }}" class="btn-hero-primary me-3">
                 Contact Us <i class="bi bi-arrow-right"></i>
             </a>
-            <a href="tel:+919876543210" class="btn-hero-secondary">
+            <a href="tel:+917618876215" class="btn-hero-secondary">
                 <i class="bi bi-telephone"></i> Call Now
             </a>
         </div>

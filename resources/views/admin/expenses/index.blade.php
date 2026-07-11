@@ -20,6 +20,11 @@
         </select>
         <button class="btn btn-admin-secondary">Filter</button>
         @if(request()->hasAny(['date_from','date_to','category']))<a href="{{ route('admin.expenses.index') }}" class="btn btn-outline-secondary">Clear</a>@endif
+        
+        <div class="ms-auto d-flex gap-2">
+            <a href="{{ route('admin.expenses.export', request()->query()) }}" class="btn btn-success"><i class="bi bi-file-earmark-spreadsheet"></i> Export Excel</a>
+            <a href="{{ route('admin.expenses.export_pdf', request()->query()) }}" class="btn btn-danger" target="_blank"><i class="bi bi-file-earmark-pdf"></i> Export PDF</a>
+        </div>
     </form>
 </div>
 

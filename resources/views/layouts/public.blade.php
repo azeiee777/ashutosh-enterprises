@@ -111,7 +111,7 @@
                     </div>
                     <div class="footer-contact-item">
                         <i class="bi bi-telephone"></i>
-                        <span>+91 98765 43210<br>+91 11-4567-8900</span>
+                        <span>+91 76188 76215<br>+91 11-4567-8900</span>
                     </div>
                     <div class="footer-contact-item">
                         <i class="bi bi-envelope"></i>
@@ -130,7 +130,7 @@
     </footer>
 
     {{-- WhatsApp Button --}}
-    <a href="https://wa.me/919876543210" target="_blank" class="whatsapp-btn" title="Chat on WhatsApp">
+    <a href="https://wa.me/917618876215" target="_blank" class="whatsapp-btn" title="Chat on WhatsApp">
         <i class="bi bi-whatsapp"></i>
     </a>
 

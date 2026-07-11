@@ -10,8 +10,8 @@
         <div class="row g-3">
             <div class="col-md-4"><label class="form-label">Date *</label><input type="date" name="date" class="form-control" required value="{{ old('date', $labourSupply->date->format('Y-m-d')) }}"></div>
             <div class="col-md-4">
-                <label class="form-label">Client *</label>
-                <select name="client_id" id="clientSelect" class="form-select" required x-on:change="loadSites($event.target.value)">
+                <label class="form-label">Client (Optional)</label>
+                <select name="client_id" id="clientSelect" class="form-select" x-on:change="loadSites($event.target.value)">
                     <option value="">Select Client</option>
                     @foreach($clients as $client)
                         <option value="{{ $client->id }}" {{ old('client_id', $labourSupply->client_id) == $client->id ? 'selected' : '' }}>{{ $client->company_name }}</option>
@@ -19,9 +19,9 @@
                 </select>
             </div>
             <div class="col-md-4">
-                <label class="form-label">Site *</label>
-                <select name="site_id" id="siteSelect" class="form-select" required>
-                    <option value="">Select Site</option>
+                <label class="form-label">Site (Optional)</label>
+                <select name="site_id" id="siteSelect" class="form-select">
+                    <option value="">Select Site (Optional)</option>
                     <template x-for="site in sites" :key="site.id">
                         <option :value="site.id" x-text="site.site_name" :selected="site.id == '{{ old('site_id', $labourSupply->site_id) }}'"></option>
                     </template>
@@ -29,9 +29,9 @@
             </div>
 
             <div class="col-12 mt-4"><h6 class="border-bottom pb-2">Manpower Details</h6></div>
-            <div class="col-md-3"><label class="form-label">Skilled Count *</label><input type="number" name="skilled_count" class="form-control" min="0" required value="{{ old('skilled_count', $labourSupply->skilled_count) }}" x-model.number="skilled" @input="calculateTotal"></div>
-            <div class="col-md-3"><label class="form-label">Semi-Skilled Count *</label><input type="number" name="semi_skilled_count" class="form-control" min="0" required value="{{ old('semi_skilled_count', $labourSupply->semi_skilled_count) }}" x-model.number="semi" @input="calculateTotal"></div>
-            <div class="col-md-3"><label class="form-label">Unskilled Count *</label><input type="number" name="unskilled_count" class="form-control" min="0" required value="{{ old('unskilled_count', $labourSupply->unskilled_count) }}" x-model.number="unskilled" @input="calculateTotal"></div>
+            <div class="col-md-3"><label class="form-label">Skilled Count</label><input type="number" name="skilled_count" class="form-control" min="0" value="{{ old('skilled_count', $labourSupply->skilled_count) }}" x-model.number="skilled" @input="calculateTotal"></div>
+            <div class="col-md-3"><label class="form-label">Semi-Skilled Count</label><input type="number" name="semi_skilled_count" class="form-control" min="0" value="{{ old('semi_skilled_count', $labourSupply->semi_skilled_count) }}" x-model.number="semi" @input="calculateTotal"></div>
+            <div class="col-md-3"><label class="form-label">Unskilled Count</label><input type="number" name="unskilled_count" class="form-control" min="0" value="{{ old('unskilled_count', $labourSupply->unskilled_count) }}" x-model.number="unskilled" @input="calculateTotal"></div>
             <div class="col-md-3"><label class="form-label">Other Count</label><input type="number" name="other_count" class="form-control" min="0" value="{{ old('other_count', $labourSupply->other_count) }}" x-model.number="other" @input="calculateTotal"></div>
             
             <div class="col-md-6 mt-3">
@@ -41,8 +41,8 @@
                 </div>
             </div>
             <div class="col-md-6 mt-3">
-                <label class="form-label">Shift *</label>
-                <select name="shift" class="form-select" required>
+                <label class="form-label">Shift (Optional)</label>
+                <select name="shift" class="form-select">
                     @foreach(\App\Enums\Shift::cases() as $shift)
                         <option value="{{ $shift->value }}" {{ old('shift', $labourSupply->shift->value) == $shift->value ? 'selected' : '' }}>{{ $shift->label() }}</option>
                     @endforeach

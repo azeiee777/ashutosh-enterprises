@@ -46,41 +46,108 @@
 </div></div>
 
 @if(isset($data))
-<div class="admin-card">
-    <div class="card-header">
-        <h6>Report Results: {{ ucwords(str_replace('_', ' ', $type)) }}</h6>
-        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="window.print()"><i class="bi bi-printer"></i> Print</button>
+<style>
+    @media print {
+        .no-print, .no-print * { display: none !important; }
+        .admin-sidebar, header, .navbar, .page-title-section, .filter-bar { display: none !important; }
+        .admin-main, .admin-content { margin: 0 !important; padding: 0 !important; width: 100% !important; }
+        body { background: #fff !important; }
+        .admin-card { box-shadow: none !important; border: none !important; }
+    }
+</style>
+
+<div class="admin-card mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h6 class="mb-0">Report Results: {{ ucwords(str_replace('_', ' ', $type)) }}</h6>
+        <div class="d-flex gap-2">
+            <form method="POST" action="{{ route('admin.reports.export_pdf') }}" class="m-0 p-0 no-print" target="_blank">
+                @csrf
+                <input type="hidden" name="report_type" value="{{ $type }}">
+                <input type="hidden" name="from" value="{{ $filters['from'] ?? '' }}">
+                <input type="hidden" name="to" value="{{ $filters['to'] ?? '' }}">
+                <input type="hidden" name="client_id" value="{{ $filters['client_id'] ?? '' }}">
+                <input type="hidden" name="site_id" value="{{ $filters['site_id'] ?? '' }}">
+                <input type="hidden" name="category" value="{{ $filters['category'] ?? '' }}">
+                <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-file-earmark-pdf"></i> Export PDF</button>
+            </form>
+            <form method="POST" action="{{ route('admin.reports.export') }}" class="m-0 p-0 no-print">
+                @csrf
+                <input type="hidden" name="report_type" value="{{ $type }}">
+                <input type="hidden" name="from" value="{{ $filters['from'] ?? '' }}">
+                <input type="hidden" name="to" value="{{ $filters['to'] ?? '' }}">
+                <input type="hidden" name="client_id" value="{{ $filters['client_id'] ?? '' }}">
+                <input type="hidden" name="site_id" value="{{ $filters['site_id'] ?? '' }}">
+                <input type="hidden" name="category" value="{{ $filters['category'] ?? '' }}">
+                <button type="submit" formaction="{{ route('admin.reports.export') }}" class="btn btn-sm btn-success"><i class="bi bi-file-earmark-spreadsheet"></i> Export Excel</button>
+            </form>
+        </div>
     </div>
     
     @if($data->count())
+        @if(isset($chartData))
+            <div class="card-body border-bottom no-print">
+                <canvas id="reportChart" style="max-height: 300px; width: 100%;"></canvas>
+            </div>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const ctx = document.getElementById('reportChart').getContext('2d');
+                    const chartData = @json($chartData);
+                    const type = '{{ $type == "expense" ? "pie" : "bar" }}';
+                    
+                    new Chart(ctx, {
+                        type: type,
+                        data: chartData,
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: { position: 'bottom' }
+                            },
+                            scales: type === 'bar' ? {
+                                y: { beginAtZero: true }
+                            } : {}
+                        }
+                    });
+                });
+            </script>
+        @endif
+
         <div class="table-responsive">
             <table class="admin-table">
                 @if($type == 'daily_labour')
                     <thead><tr><th>Date</th><th>Client</th><th>Site</th><th>S</th><th>SS</th><th>US</th><th>Total</th></tr></thead>
                     <tbody>
                         @foreach($data as $row)
-                        <tr><td>{{ $row->date->format('d M Y') }}</td><td>{{ $row->client->company_name }}</td><td>{{ $row->site?->site_name ?? '-' }}</td><td>{{ $row->skilled_count }}</td><td>{{ $row->semi_skilled_count }}</td><td>{{ $row->unskilled_count }}</td><td><strong>{{ $row->total_count }}</strong></td></tr>
+                        <tr><td>{{ $row->date->format('d M Y') }}</td><td>{{ $row->client?->company_name ?? '-' }}</td><td>{{ $row->site?->site_name ?? '-' }}</td><td>{{ $row->skilled_count }}</td><td>{{ $row->semi_skilled_count }}</td><td>{{ $row->unskilled_count }}</td><td><strong>{{ $row->total_count }}</strong></td></tr>
                         @endforeach
                     </tbody>
                 @elseif($type == 'monthly_labour')
                     <thead><tr><th>Month</th><th>Client</th><th>Total S</th><th>Total SS</th><th>Total US</th><th>Grand Total</th></tr></thead>
                     <tbody>
                         @foreach($data as $row)
-                        <tr><td>{{ \Carbon\Carbon::parse($row->month.'-01')->format('M Y') }}</td><td>{{ $row->client->company_name }}</td><td>{{ $row->total_skilled }}</td><td>{{ $row->total_semi_skilled }}</td><td>{{ $row->total_unskilled }}</td><td><strong>{{ $row->grand_total }}</strong></td></tr>
+                        <tr><td>{{ \Carbon\Carbon::parse($row->month.'-01')->format('M Y') }}</td><td>{{ $row->client?->company_name ?? '-' }}</td><td>{{ $row->total_skilled }}</td><td>{{ $row->total_semi_skilled }}</td><td>{{ $row->total_unskilled }}</td><td><strong>{{ $row->grand_total }}</strong></td></tr>
                         @endforeach
                     </tbody>
                 @elseif($type == 'client_wise_labour')
                     <thead><tr><th>Client</th><th>Total Days</th><th>Total S</th><th>Total SS</th><th>Total US</th><th>Grand Total</th></tr></thead>
                     <tbody>
                         @foreach($data as $row)
-                        <tr><td>{{ $row->client->company_name }}</td><td>{{ $row->total_days }}</td><td>{{ $row->total_skilled }}</td><td>{{ $row->total_semi_skilled }}</td><td>{{ $row->total_unskilled }}</td><td><strong>{{ $row->grand_total }}</strong></td></tr>
+                        <tr><td>{{ $row->client?->company_name ?? '-' }}</td><td>{{ $row->total_days }}</td><td>{{ $row->total_skilled }}</td><td>{{ $row->total_semi_skilled }}</td><td>{{ $row->total_unskilled }}</td><td><strong>{{ $row->grand_total }}</strong></td></tr>
+                        @endforeach
+                    </tbody>
+                @elseif($type == 'site_wise_labour')
+                    <thead><tr><th>Site</th><th>Client</th><th>Total Days</th><th>Grand Total</th></tr></thead>
+                    <tbody>
+                        @foreach($data as $row)
+                        <tr><td>{{ $row->site?->site_name ?? '-' }}</td><td>{{ $row->client?->company_name ?? '-' }}</td><td>{{ $row->total_days }}</td><td><strong>{{ $row->grand_total }}</strong></td></tr>
                         @endforeach
                     </tbody>
                 @elseif($type == 'payment')
                     <thead><tr><th>Date</th><th>Client</th><th>Head</th><th>Amount</th><th>Method</th></tr></thead>
                     <tbody>
                         @foreach($data as $row)
-                        <tr><td>{{ $row->date->format('d M Y') }}</td><td>{{ $row->client->company_name }}</td><td>{{ $row->payment_head->label() }}</td><td>₹{{ number_format($row->amount, 2) }}</td><td>{{ $row->payment_method->label() }}</td></tr>
+                        <tr><td>{{ $row->date->format('d M Y') }}</td><td>{{ $row->client?->company_name ?? '-' }}</td><td>{{ $row->payment_head->label() }}</td><td>₹{{ number_format($row->amount, 2) }}</td><td>{{ $row->payment_method->label() }}</td></tr>
                         @endforeach
                     </tbody>
                 @elseif($type == 'expense')

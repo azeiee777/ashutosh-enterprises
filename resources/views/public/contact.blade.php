@@ -5,7 +5,7 @@
 <section class="section"><div class="container">
 <div class="row g-4 mb-5">
     <div class="col-md-6 col-lg-3 animate-on-scroll"><div class="contact-info-card h-100"><i class="bi bi-geo-alt d-block"></i><h6>Address</h6><p>123 Business Park, Industrial Area, New Delhi - 110001</p></div></div>
-    <div class="col-md-6 col-lg-3 animate-on-scroll"><div class="contact-info-card h-100"><i class="bi bi-telephone d-block"></i><h6>Phone</h6><p><a href="tel:+919876543210" style="color:inherit;">+91 98765 43210</a><br><a href="tel:+911145678900" style="color:inherit;">+91 11-4567-8900</a></p></div></div>
+    <div class="col-md-6 col-lg-3 animate-on-scroll"><div class="contact-info-card h-100"><i class="bi bi-telephone d-block"></i><h6>Phone</h6><p><a href="tel:+917618876215" style="color:inherit;">+91 76188 76215</a><br><a href="tel:+911145678900" style="color:inherit;">+91 11-4567-8900</a></p></div></div>
     <div class="col-md-6 col-lg-3 animate-on-scroll"><div class="contact-info-card h-100"><i class="bi bi-envelope d-block"></i><h6>Email</h6><p><a href="mailto:info@ashutoshenterprises.com" style="color:inherit;">info@ashutoshenterprises.com</a></p></div></div>
     <div class="col-md-6 col-lg-3 animate-on-scroll"><div class="contact-info-card h-100"><i class="bi bi-clock d-block"></i><h6>Business Hours</h6><p>Mon - Sat<br>9:00 AM - 6:00 PM</p></div></div>
 </div>
@@ -31,8 +31,8 @@
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d224346.54004697942!2d77.06889999999999!3d28.527280050000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd5b347eb62d%3A0x52c2b7494e204dce!2sNew%20Delhi%2C%20Delhi!5e0!3m2!1sen!2sin!4v1" width="100%" height="100%" style="border:0;" allowfullscreen loading="lazy"></iframe>
         </div>
         <div class="d-flex gap-2">
-            <a href="https://wa.me/919876543210" target="_blank" class="btn btn-success rounded-pill flex-fill"><i class="bi bi-whatsapp me-1"></i> WhatsApp</a>
-            <a href="tel:+919876543210" class="btn btn-dark rounded-pill flex-fill"><i class="bi bi-telephone me-1"></i> Call Now</a>
+            <a href="https://wa.me/917618876215" target="_blank" class="btn btn-success rounded-pill flex-fill"><i class="bi bi-whatsapp me-1"></i> WhatsApp</a>
+            <a href="tel:+917618876215" class="btn btn-dark rounded-pill flex-fill"><i class="bi bi-telephone me-1"></i> Call Now</a>
         </div>
     </div>
 </div></div></section>

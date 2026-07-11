@@ -41,7 +41,13 @@
                 @foreach($sites as $site)
                 <tr>
                     <td><strong>{{ $site->site_name }}</strong></td>
-                    <td><a href="{{ route('admin.clients.show', $site->client) }}" class="text-decoration-none">{{ $site->client->company_name }}</a></td>
+                    <td>
+                        @if($site->client)
+                            <a href="{{ route('admin.clients.show', $site->client) }}" class="text-decoration-none">{{ $site->client->company_name }}</a>
+                        @else
+                            <span class="text-muted">-</span>
+                        @endif
+                    </td>
                     <td><span title="{{ $site->address }}">{{ Str::limit($site->address, 30) }}</span></td>
                     <td>{{ $site->supervisor_name ?? '-' }}</td>
                     <td>{{ $site->start_date ? $site->start_date->format('d M Y') : '-' }}</td>

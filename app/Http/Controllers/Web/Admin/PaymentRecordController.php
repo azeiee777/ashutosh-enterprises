@@ -14,8 +14,8 @@ class PaymentRecordController extends Controller
     public function index()
     {
         $payments = PaymentRecord::with(['client', 'site'])
-            ->when(request('date_from'), fn($q, $d) => $q->where('date', '>=', $d))
-            ->when(request('date_to'), fn($q, $d) => $q->where('date', '<=', $d))
+            ->when(request('date_from'), fn($q, $d) => $q->whereDate('date', '>=', $d))
+            ->when(request('date_to'), fn($q, $d) => $q->whereDate('date', '<=', $d))
             ->when(request('client_id'), fn($q, $c) => $q->byClient($c))
             ->when(request('payment_head'), fn($q, $h) => $q->byHead($h))
             ->orderBy('date', 'desc')
@@ -24,6 +24,41 @@ class PaymentRecordController extends Controller
 
         $clients = Client::orderBy('company_name')->get();
         return view('admin.payments.index', compact('payments', 'clients'));
+    }
+
+    public function exportPdf()
+    {
+        $data = PaymentRecord::with(['client', 'site'])
+            ->when(request('date_from'), fn($q, $d) => $q->whereDate('date', '>=', $d))
+            ->when(request('date_to'), fn($q, $d) => $q->whereDate('date', '<=', $d))
+            ->when(request('client_id'), fn($q, $c) => $q->byClient($c))
+            ->when(request('payment_head'), fn($q, $h) => $q->byHead($h))
+            ->orderBy('date', 'desc')
+            ->get();
+
+        $type = 'payment';
+        $filters = request()->only(['date_from', 'date_to', 'client_id', 'payment_head']);
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('admin.reports.pdf', compact('data', 'type', 'filters'))
+            ->setPaper('a4', 'landscape');
+
+        return $pdf->download("payments_" . date('Ymd_His') . ".pdf");
+    }
+
+    public function export()
+    {
+        $data = PaymentRecord::with(['client', 'site'])
+            ->when(request('date_from'), fn($q, $d) => $q->whereDate('date', '>=', $d))
+            ->when(request('date_to'), fn($q, $d) => $q->whereDate('date', '<=', $d))
+            ->when(request('client_id'), fn($q, $c) => $q->byClient($c))
+            ->when(request('payment_head'), fn($q, $h) => $q->byHead($h))
+            ->orderBy('date', 'desc')
+            ->get();
+
+        return \Maatwebsite\Excel\Facades\Excel::download(
+            new \App\Exports\PaymentExport($data), 
+            "payments_" . date('Ymd_His') . ".xlsx"
+        );
     }
 
     public function create()

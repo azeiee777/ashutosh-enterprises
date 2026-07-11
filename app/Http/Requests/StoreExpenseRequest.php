@@ -10,12 +10,20 @@ class StoreExpenseRequest extends FormRequest
 {
     public function authorize(): bool { return true; }
 
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'amount' => $this->input('amount', 0),
+            'category' => $this->input('category', ExpenseCategory::MISC->value),
+        ]);
+    }
+
     public function rules(): array
     {
         return [
             'date' => 'required|date',
-            'category' => ['required', Rule::enum(ExpenseCategory::class)],
-            'amount' => 'required|numeric|min:0.01',
+            'category' => ['nullable', Rule::enum(ExpenseCategory::class)],
+            'amount' => 'nullable|numeric|min:0',
             'vendor' => 'nullable|string|max:255',
             'description' => 'nullable|string|max:1000',
         ];

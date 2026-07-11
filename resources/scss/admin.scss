@@ -476,10 +476,11 @@ body.sidebar-collapsed .admin-main {
     text-align: center;
     padding: 4rem 2rem;
 
-    i {
+    > i {
         font-size: 3rem;
         color: var(--admin-text-secondary);
         margin-bottom: 1rem;
+        display: inline-block;
     }
 
     h5 { font-weight: 700; margin-bottom: 0.5rem; }

@@ -14,8 +14,8 @@ class DailyLabourSupplyController extends Controller
     public function index()
     {
         $supplies = DailyLabourSupply::with(['client', 'site'])
-            ->when(request('date_from'), fn($q, $d) => $q->where('date', '>=', $d))
-            ->when(request('date_to'), fn($q, $d) => $q->where('date', '<=', $d))
+            ->when(request('date_from'), fn($q, $d) => $q->whereDate('date', '>=', $d))
+            ->when(request('date_to'), fn($q, $d) => $q->whereDate('date', '<=', $d))
             ->when(request('client_id'), fn($q, $c) => $q->byClient($c))
             ->when(request('site_id'), fn($q, $s) => $q->bySite($s))
             ->orderBy('date', 'desc')
@@ -24,6 +24,41 @@ class DailyLabourSupplyController extends Controller
 
         $clients = Client::orderBy('company_name')->get();
         return view('admin.labour-supply.index', compact('supplies', 'clients'));
+    }
+
+    public function exportPdf()
+    {
+        $data = DailyLabourSupply::with(['client', 'site'])
+            ->when(request('date_from'), fn($q, $d) => $q->whereDate('date', '>=', $d))
+            ->when(request('date_to'), fn($q, $d) => $q->whereDate('date', '<=', $d))
+            ->when(request('client_id'), fn($q, $c) => $q->byClient($c))
+            ->when(request('site_id'), fn($q, $s) => $q->bySite($s))
+            ->orderBy('date', 'desc')
+            ->get();
+
+        $type = 'daily_labour';
+        $filters = request()->only(['date_from', 'date_to', 'client_id', 'site_id']);
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('admin.reports.pdf', compact('data', 'type', 'filters'))
+            ->setPaper('a4', 'landscape');
+
+        return $pdf->download("labour_supply_" . date('Ymd_His') . ".pdf");
+    }
+
+    public function export()
+    {
+        $data = DailyLabourSupply::with(['client', 'site'])
+            ->when(request('date_from'), fn($q, $d) => $q->whereDate('date', '>=', $d))
+            ->when(request('date_to'), fn($q, $d) => $q->whereDate('date', '<=', $d))
+            ->when(request('client_id'), fn($q, $c) => $q->byClient($c))
+            ->when(request('site_id'), fn($q, $s) => $q->bySite($s))
+            ->orderBy('date', 'desc')
+            ->get();
+
+        return \Maatwebsite\Excel\Facades\Excel::download(
+            new \App\Exports\LabourSupplyExport($data), 
+            "labour_supply_" . date('Ymd_His') . ".xlsx"
+        );
     }
 
     public function create()

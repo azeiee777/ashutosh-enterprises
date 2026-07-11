@@ -11,6 +11,12 @@ enum ExpenseCategory: string
     case TRAVEL = 'travel';
     case UTILITIES = 'utilities';
     case MISCELLANEOUS = 'miscellaneous';
+    
+    // New Labour/Site related expenses
+    case GROUP_LABOUR = 'group_labour';
+    case SINGLE_LABOUR = 'single_labour';
+    case ACCOMMODATION = 'accommodation';
+    case TRANSPORTATION = 'transportation';
 
     public function label(): string
     {
@@ -22,6 +28,11 @@ enum ExpenseCategory: string
             self::TRAVEL => 'Travel',
             self::UTILITIES => 'Utilities',
             self::MISCELLANEOUS => 'Miscellaneous',
+            
+            self::GROUP_LABOUR => 'Group Labour Payment',
+            self::SINGLE_LABOUR => 'Single Labour Payment',
+            self::ACCOMMODATION => 'Accommodation',
+            self::TRANSPORTATION => 'Transportation',
         };
     }
 
@@ -35,6 +46,11 @@ enum ExpenseCategory: string
             self::TRAVEL => 'bi-car-front',
             self::UTILITIES => 'bi-lightning',
             self::MISCELLANEOUS => 'bi-three-dots',
+            
+            self::GROUP_LABOUR => 'bi-people',
+            self::SINGLE_LABOUR => 'bi-person',
+            self::ACCOMMODATION => 'bi-house',
+            self::TRANSPORTATION => 'bi-truck',
         };
     }
 }

@@ -68,19 +68,27 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('sites', SiteController::class);
 
     // Daily Labour Supply
+    Route::get('labour-supply/export', [DailyLabourSupplyController::class, 'export'])->name('labour-supply.export');
+    Route::get('labour-supply/export-pdf', [DailyLabourSupplyController::class, 'exportPdf'])->name('labour-supply.export_pdf');
     Route::resource('labour-supply', DailyLabourSupplyController::class)
         ->parameters(['labour-supply' => 'labourSupply']);
 
     // Payment Records
+    Route::get('payments/export', [PaymentRecordController::class, 'export'])->name('payments.export');
+    Route::get('payments/export-pdf', [PaymentRecordController::class, 'exportPdf'])->name('payments.export_pdf');
     Route::resource('payments', PaymentRecordController::class)
         ->parameters(['payments' => 'payment']);
 
     // Expense Management
+    Route::get('expenses/export', [ExpenseController::class, 'export'])->name('expenses.export');
+    Route::get('expenses/export-pdf', [ExpenseController::class, 'exportPdf'])->name('expenses.export_pdf');
     Route::resource('expenses', ExpenseController::class);
 
     // Reports
     Route::get('reports', [ReportController::class, 'index'])->name('reports.index');
     Route::post('reports', [ReportController::class, 'generate'])->name('reports.generate');
+    Route::post('reports/export', [ReportController::class, 'export'])->name('reports.export');
+    Route::post('reports/export-pdf', [ReportController::class, 'exportPdf'])->name('reports.export_pdf');
 
     // User Management
     Route::resource('users', UserController::class)->except(['show']);

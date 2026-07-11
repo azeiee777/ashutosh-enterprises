@@ -4,23 +4,21 @@ namespace App\Enums;
 
 enum PaymentHead: string
 {
-    case FOOD = 'food';
-    case GROUP = 'group';
-    case SINGLE_LABOUR = 'single_labour';
-    case TRANSPORTATION = 'transportation';
-    case ACCOMMODATION = 'accommodation';
-    case ADVANCE = 'advance';
+    case ADVANCE_FROM_CLIENT = 'advance_from_client';
+    case PART_PAYMENT = 'part_payment';
+    case FULL_SETTLEMENT = 'full_settlement';
+    case ON_ACCOUNT = 'on_account';
+    case REFUND = 'refund';
     case MISCELLANEOUS = 'miscellaneous';
 
     public function label(): string
     {
         return match ($this) {
-            self::FOOD => 'Food Payment',
-            self::GROUP => 'Group Payment',
-            self::SINGLE_LABOUR => 'Single Labour Payment',
-            self::TRANSPORTATION => 'Transportation',
-            self::ACCOMMODATION => 'Accommodation',
-            self::ADVANCE => 'Advance',
+            self::ADVANCE_FROM_CLIENT => 'Advance from Client',
+            self::PART_PAYMENT => 'Part Payment / Against Invoice',
+            self::FULL_SETTLEMENT => 'Full Settlement',
+            self::ON_ACCOUNT => 'On Account Payment',
+            self::REFUND => 'Refund to Client',
             self::MISCELLANEOUS => 'Miscellaneous',
         };
     }
@@ -28,12 +26,11 @@ enum PaymentHead: string
     public function icon(): string
     {
         return match ($this) {
-            self::FOOD => 'bi-cup-hot',
-            self::GROUP => 'bi-people',
-            self::SINGLE_LABOUR => 'bi-person',
-            self::TRANSPORTATION => 'bi-truck',
-            self::ACCOMMODATION => 'bi-house',
-            self::ADVANCE => 'bi-cash-stack',
+            self::ADVANCE_FROM_CLIENT => 'bi-cash-stack',
+            self::PART_PAYMENT => 'bi-pie-chart',
+            self::FULL_SETTLEMENT => 'bi-check-circle',
+            self::ON_ACCOUNT => 'bi-wallet2',
+            self::REFUND => 'bi-arrow-return-left',
             self::MISCELLANEOUS => 'bi-three-dots',
         };
     }

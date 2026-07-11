@@ -10,15 +10,16 @@
         <div class="row g-3">
             <div class="col-md-4"><label class="form-label">Date *</label><input type="date" name="date" class="form-control" required value="{{ old('date', $expense->date->format('Y-m-d')) }}"></div>
             <div class="col-md-4">
-                <label class="form-label">Category *</label>
-                <select name="category" class="form-select" required>
+                <label class="form-label">Category (Optional)</label>
+                <select name="category" class="form-select">
+                    <option value="">Select Category</option>
                     @foreach(\App\Enums\ExpenseCategory::cases() as $category)
                         <option value="{{ $category->value }}" {{ old('category', $expense->category->value) == $category->value ? 'selected' : '' }}>{{ $category->label() }}</option>
                     @endforeach
                 </select>
                 @error('category')<small class="text-danger">{{ $message }}</small>@enderror
             </div>
-            <div class="col-md-4"><label class="form-label">Amount (₹) *</label><input type="number" step="0.01" name="amount" class="form-control" required value="{{ old('amount', $expense->amount) }}">@error('amount')<small class="text-danger">{{ $message }}</small>@enderror</div>
+            <div class="col-md-4"><label class="form-label">Amount (₹) (Optional)</label><input type="number" step="0.01" name="amount" class="form-control" value="{{ old('amount', $expense->amount) }}">@error('amount')<small class="text-danger">{{ $message }}</small>@enderror</div>
             <div class="col-md-6"><label class="form-label">Vendor</label><input type="text" name="vendor" class="form-control" value="{{ old('vendor', $expense->vendor) }}"></div>
             <div class="col-md-6"><label class="form-label">Description</label><input type="text" name="description" class="form-control" value="{{ old('description', $expense->description) }}"></div>
             <div class="col-12"><button type="submit" class="btn btn-admin-primary"><i class="bi bi-check-lg"></i> Update Expense</button></div>

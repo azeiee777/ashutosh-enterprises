@@ -20,6 +20,11 @@
         </select>
         <button class="btn btn-admin-secondary">Filter</button>
         @if(request()->hasAny(['date_from','date_to','client_id']))<a href="{{ route('admin.labour-supply.index') }}" class="btn btn-outline-secondary">Clear</a>@endif
+        
+        <div class="ms-auto d-flex gap-2">
+            <a href="{{ route('admin.labour-supply.export', request()->query()) }}" class="btn btn-success"><i class="bi bi-file-earmark-spreadsheet"></i> Export Excel</a>
+            <a href="{{ route('admin.labour-supply.export_pdf', request()->query()) }}" class="btn btn-danger" target="_blank"><i class="bi bi-file-earmark-pdf"></i> Export PDF</a>
+        </div>
     </form>
 </div>
 
@@ -36,7 +41,14 @@
                 @foreach($supplies as $supply)
                 <tr>
                     <td><strong>{{ $supply->date->format('d M Y') }}</strong></td>
-                    <td><a href="{{ route('admin.clients.show', $supply->client) }}" class="text-decoration-none fw-semibold">{{ $supply->client->company_name }}</a><br><small class="text-muted">{{ $supply->site?->site_name }}</small></td>
+                    <td>
+                        @if($supply->client)
+                            <a href="{{ route('admin.clients.show', $supply->client) }}" class="text-decoration-none fw-semibold">{{ $supply->client->company_name }}</a>
+                        @else
+                            <span class="fw-semibold text-muted">-</span>
+                        @endif
+                        <br><small class="text-muted">{{ $supply->site?->site_name }}</small>
+                    </td>
                     <td>{{ $supply->skilled_count }}</td>
                     <td>{{ $supply->semi_skilled_count }}</td>
                     <td>{{ $supply->unskilled_count }}</td>
