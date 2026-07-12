@@ -28,8 +28,13 @@ class DashboardService
 
     public function getLabourTrend(int $months = 6): array
     {
+        $driver = DB::connection()->getDriverName();
+        $monthSelect = $driver === 'sqlite' 
+            ? "strftime('%Y-%m', date) as month" 
+            : "DATE_FORMAT(date, '%Y-%m') as month";
+
         $data = DailyLabourSupply::select(
-            DB::raw("strftime('%Y-%m', date) as month"),
+            DB::raw($monthSelect),
             DB::raw('SUM(total_count) as total')
         )
             ->where('date', '>=', now()->subMonths($months)->startOfMonth())
@@ -45,8 +50,13 @@ class DashboardService
 
     public function getExpenseTrend(int $months = 6): array
     {
+        $driver = DB::connection()->getDriverName();
+        $monthSelect = $driver === 'sqlite' 
+            ? "strftime('%Y-%m', date) as month" 
+            : "DATE_FORMAT(date, '%Y-%m') as month";
+
         $data = Expense::select(
-            DB::raw("strftime('%Y-%m', date) as month"),
+            DB::raw($monthSelect),
             DB::raw('SUM(amount) as total')
         )
             ->where('date', '>=', now()->subMonths($months)->startOfMonth())
