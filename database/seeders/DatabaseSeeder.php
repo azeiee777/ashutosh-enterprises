@@ -41,7 +41,7 @@ class DatabaseSeeder extends Seeder
         // 2. Company Settings
         $settings = [
             ['key' => 'Company Name', 'value' => 'Ashutosh Enterprises', 'group' => 'general'],
-            ['key' => 'Email', 'value' => 'info@ashutoshenterprises.com', 'group' => 'contact'],
+            ['key' => 'Email', 'value' => 'ashutosh.ent.co@gmail.com', 'group' => 'contact'],
             ['key' => 'Phone', 'value' => '+91 98765 43210', 'group' => 'contact'],
             ['key' => 'Address', 'value' => '123 Business Park, Industrial Area, New Delhi - 110001', 'group' => 'contact'],
             ['key' => 'GSTIN', 'value' => '07AABCA1234Z1Z5', 'group' => 'invoice'],

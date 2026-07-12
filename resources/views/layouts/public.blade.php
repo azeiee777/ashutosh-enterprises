@@ -150,7 +150,7 @@
                     </div>
                     <div class="footer-contact-item">
                         <i class="bi bi-envelope"></i>
-                        <span>info@ashutoshenterprises.com</span>
+                        <span>ashutosh.ent.co@gmail.com</span>
                     </div>
                     <div class="footer-contact-item">
                         <i class="bi bi-clock"></i>

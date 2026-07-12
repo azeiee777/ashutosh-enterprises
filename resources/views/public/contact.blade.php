@@ -10,7 +10,7 @@
 <div class="row g-4 mb-5">
     <div class="col-md-6 col-lg-3 animate-on-scroll"><div class="contact-info-card h-100"><i class="bi bi-geo-alt d-block"></i><h6>Address</h6><p>123 Business Park, Industrial Area, New Delhi - 110001</p></div></div>
     <div class="col-md-6 col-lg-3 animate-on-scroll"><div class="contact-info-card h-100"><i class="bi bi-telephone d-block"></i><h6>Phone</h6><p><a href="tel:+917618876215" style="color:inherit;">+91 76188 76215</a><br><a href="tel:+911145678900" style="color:inherit;">+91 11-4567-8900</a></p></div></div>
-    <div class="col-md-6 col-lg-3 animate-on-scroll"><div class="contact-info-card h-100"><i class="bi bi-envelope d-block"></i><h6>Email</h6><p><a href="mailto:info@ashutoshenterprises.com" style="color:inherit;">info@ashutoshenterprises.com</a></p></div></div>
+    <div class="col-md-6 col-lg-3 animate-on-scroll"><div class="contact-info-card h-100"><i class="bi bi-envelope d-block"></i><h6>Email</h6><p><a href="mailto:ashutosh.ent.co@gmail.com" style="color:inherit;">ashutosh.ent.co@gmail.com</a></p></div></div>
     <div class="col-md-6 col-lg-3 animate-on-scroll"><div class="contact-info-card h-100"><i class="bi bi-clock d-block"></i><h6>Business Hours</h6><p>Mon - Sat<br>9:00 AM - 6:00 PM</p></div></div>
 </div>
 
