@@ -32,17 +32,26 @@ jobs:
           npm install
           npm run build
 
-      - name: Deploy to Hostinger using Rsync
+      - name: Create Deployment Archive
         run: |
-          sudo apt-get update && sudo apt-get install -y sshpass rsync
-          sshpass -p "${{ secrets.HOST_PASSWORD }}" rsync -rltgoDzvO \
-            --exclude="/node_modules/" \
-            --exclude="/.git/" \
-            --exclude="/.github/" \
-            --exclude="/.env" \
-            --exclude="/tests/" \
-            -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.HOST_PORT }}" \
-            ./ ${{ secrets.HOST_USERNAME }}@${{ secrets.HOST_IP }}:${{ secrets.HOST_PATH }}
+          tar -czf release.tar.gz \
+            --exclude=node_modules \
+            --exclude=.git \
+            --exclude=.github \
+            --exclude=.env \
+            --exclude=tests \
+            --exclude=release.tar.gz \
+            .
+
+      - name: Upload Archive via SCP
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOST_IP }}
+          username: ${{ secrets.HOST_USERNAME }}
+          password: ${{ secrets.HOST_PASSWORD }}
+          port: ${{ secrets.HOST_PORT }}
+          source: "release.tar.gz"
+          target: ${{ secrets.HOST_PATH }}
 
       - name: Execute Post-Deployment Scripts
         uses: appleboy/ssh-action@v1.0.3
@@ -53,6 +62,10 @@ jobs:
           port: ${{ secrets.HOST_PORT }}
           script: |
             cd ${{ secrets.HOST_PATH }}
+            
+            # Extract the archive
+            tar -xzf release.tar.gz
+            rm release.tar.gz
             
             # Ensure storage has correct permissions (Hostinger shared hosting usually handles this, but just in case)
             chmod -R 775 storage bootstrap/cache || true
