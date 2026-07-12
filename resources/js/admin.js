@@ -35,8 +35,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const sidebar = document.getElementById('sidebar');
     if (sidebarToggle && sidebar) {
         sidebarToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('collapsed');
-            document.body.classList.toggle('sidebar-collapsed');
+            if (window.innerWidth <= 991) {
+                sidebar.classList.toggle('show');
+            } else {
+                sidebar.classList.toggle('collapsed');
+                document.body.classList.toggle('sidebar-collapsed');
+            }
         });
     }
 
