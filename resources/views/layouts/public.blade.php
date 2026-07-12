@@ -26,7 +26,7 @@
     <!-- Schema.org LocalBusiness JSON-LD -->
     <script type="application/ld+json">
     {
-      "@context": "https://schema.org",
+      "@@context": "https://schema.org",
       "@type": "LocalBusiness",
       "name": "Ashutosh Enterprises",
       "image": "{{ asset('images/logo.png') }}",
