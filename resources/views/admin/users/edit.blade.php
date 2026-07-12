@@ -11,6 +11,7 @@
             <div class="col-md-6"><label class="form-label">Full Name *</label><input type="text" name="name" class="form-control" required value="{{ old('name', $user->name) }}">@error('name')<small class="text-danger">{{ $message }}</small>@enderror</div>
             <div class="col-md-6"><label class="form-label">Email Address *</label><input type="email" name="email" class="form-control" required value="{{ old('email', $user->email) }}">@error('email')<small class="text-danger">{{ $message }}</small>@enderror</div>
             <div class="col-md-6"><label class="form-label">Phone</label><input type="text" name="phone" class="form-control" value="{{ old('phone', $user->phone) }}"></div>
+            @if(auth()->user()->isSuperAdmin())
             <div class="col-md-6">
                 <label class="form-label">Role *</label>
                 <select name="role" class="form-select" required>
@@ -20,13 +21,16 @@
                 </select>
                 @error('role')<small class="text-danger">{{ $message }}</small>@enderror
             </div>
+            @endif
             <div class="col-md-6"><label class="form-label">New Password (leave blank to keep current)</label><input type="password" name="password" class="form-control" minlength="8">@error('password')<small class="text-danger">{{ $message }}</small>@enderror</div>
+            @if(auth()->user()->isSuperAdmin())
             <div class="col-md-6 mt-md-4 pt-md-2">
                 <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" role="switch" name="is_active" id="isActive" value="1" {{ old('is_active', $user->is_active) ? 'checked' : '' }}>
                     <label class="form-check-label ms-2" for="isActive">Account is Active</label>
                 </div>
             </div>
+            @endif
             <div class="col-12"><button type="submit" class="btn btn-admin-primary"><i class="bi bi-check-lg"></i> Update User</button></div>
         </div>
     </form>

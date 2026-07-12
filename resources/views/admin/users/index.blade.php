@@ -5,7 +5,9 @@
 @section('content')
 <div class="page-title-section">
     <div><h1>User Management</h1><p class="page-subtitle">Manage system users and access roles</p></div>
+    @if(auth()->user()->isSuperAdmin())
     <a href="{{ route('admin.users.create') }}" class="btn btn-admin-primary"><i class="bi bi-plus-lg"></i> Add User</a>
+    @endif
 </div>
 
 <div class="filter-bar">
@@ -55,8 +57,10 @@
                     <td>{{ $user->created_at->format('d M Y') }}</td>
                     <td>
                         <div class="d-flex gap-1">
+                            @if(auth()->user()->isSuperAdmin() || auth()->id() === $user->id)
                             <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-sm btn-outline-primary" title="Edit"><i class="bi bi-pencil"></i></a>
-                            @if(auth()->id() !== $user->id)
+                            @endif
+                            @if(auth()->user()->isSuperAdmin() && auth()->id() !== $user->id)
                             <form method="POST" action="{{ route('admin.users.destroy', $user) }}" onsubmit="return confirm('Delete this user?')">@csrf @method('DELETE')
                                 <button class="btn btn-sm btn-outline-danger" title="Delete"><i class="bi bi-trash"></i></button>
                             </form>
