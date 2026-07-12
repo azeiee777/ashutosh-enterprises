@@ -67,6 +67,9 @@ jobs:
             tar -xzf release.tar.gz
             rm release.tar.gz
             
+            # Remove Hostinger's default holding page if it exists
+            rm -f default.php
+            
             # Ensure storage has correct permissions (Hostinger shared hosting usually handles this, but just in case)
             chmod -R 775 storage bootstrap/cache || true
             
