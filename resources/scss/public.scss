@@ -169,6 +169,21 @@ h1, h2, h3, h4, h5, h6 {
             transform: translateY(-1px);
         }
     }
+
+    @media (max-width: 991px) {
+        .navbar-collapse {
+            background: $primary;
+            padding: 1rem;
+            border-radius: $border-radius;
+            margin-top: 1rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        
+        &.scrolled .navbar-collapse {
+            background: $white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+    }
 }
 
 // ===== Hero Section =====
