@@ -19,10 +19,35 @@ class ReportService
             ->get();
     }
 
+    public function getMonthlyLabourTrend(int $months = 6): \Illuminate\Support\Collection
+    {
+        $driver = DB::connection()->getDriverName();
+        $monthSelect = $driver === 'sqlite' 
+            ? "strftime('%Y-%m', date) as month" 
+            : "DATE_FORMAT(date, '%Y-%m') as month";
+
+        return DailyLabourSupply::select(
+            DB::raw($monthSelect),
+            DB::raw('SUM(skilled_count) as skilled'),
+            DB::raw('SUM(semi_skilled_count) as semi_skilled'),
+            DB::raw('SUM(unskilled_count) as unskilled'),
+            DB::raw('SUM(total_count) as total')
+        )
+            ->where('date', '>=', now()->subMonths($months)->startOfMonth())
+            ->groupBy('month')
+            ->orderBy('month')
+            ->get();
+    }
+
     public function getMonthlyLabourReport(array $filters)
     {
+        $driver = DB::connection()->getDriverName();
+        $monthSelect = $driver === 'sqlite' 
+            ? "strftime('%Y-%m', date) as month" 
+            : "DATE_FORMAT(date, '%Y-%m') as month";
+
         return DailyLabourSupply::select(
-            DB::raw("strftime('%Y-%m', date) as month"),
+            DB::raw($monthSelect),
             'client_id',
             DB::raw('SUM(skilled_count) as total_skilled'),
             DB::raw('SUM(semi_skilled_count) as total_semi_skilled'),
