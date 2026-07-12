@@ -42,6 +42,32 @@ Route::post('/careers/apply', [CareerController::class, 'apply'])->name('careers
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
+// SEO Sitemap
+Route::get('/sitemap.xml', function () {
+    $xml = '<?xml version="1.0" encoding="UTF-8"?>';
+    $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+    $routes = ['home', 'about', 'services.index', 'clients.showcase', 'gallery', 'careers.index', 'contact'];
+    foreach ($routes as $route) {
+        $xml .= '<url>';
+        $xml .= '<loc>' . route($route) . '</loc>';
+        $xml .= '<changefreq>weekly</changefreq>';
+        $xml .= '<priority>' . ($route === 'home' ? '1.0' : '0.8') . '</priority>';
+        $xml .= '</url>';
+    }
+    // Dynamic services
+    $services = \App\Models\Service::where('is_active', true)->get();
+    foreach ($services as $service) {
+        $xml .= '<url>';
+        $xml .= '<loc>' . route('services.show', $service->slug) . '</loc>';
+        $xml .= '<changefreq>monthly</changefreq>';
+        $xml .= '<priority>0.7</priority>';
+        $xml .= '</url>';
+    }
+    $xml .= '</urlset>';
+    
+    return response($xml, 200)->header('Content-Type', 'text/xml');
+});
+
 /*
 |--------------------------------------------------------------------------
 | Authentication Routes

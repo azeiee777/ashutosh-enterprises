@@ -23,6 +23,8 @@ class DashboardService
             'monthly_expenses' => Expense::thisMonth()->sum('amount'),
             'total_payments' => PaymentRecord::sum('amount'),
             'pending_payments' => PaymentRecord::where('payment_head', 'advance')->sum('amount'),
+            'today_visitors' => \App\Models\Visitor::whereDate('visit_date', \Carbon\Carbon::today())->count(),
+            'total_visitors' => \App\Models\Visitor::count(),
         ];
     }
 

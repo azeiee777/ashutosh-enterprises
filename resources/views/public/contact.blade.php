@@ -1,5 +1,9 @@
 @extends('layouts.public')
-@section('title', 'Contact Us')
+
+@section('title', 'Contact Us | Ashutosh Enterprises')
+@section('meta_description', 'Get in touch with Ashutosh Enterprises for all your labour and manpower supply needs. Call us or visit our New Delhi office.')
+@section('meta_keywords', 'contact ashutosh enterprises, hire labour, manpower supply contact, construction workers contact')
+
 @section('content')
 <div class="page-header"><div class="container"><h1>Contact Us</h1><nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li><li class="breadcrumb-item active">Contact</li></ol></nav></div></div>
 <section class="section"><div class="container">

@@ -61,6 +61,20 @@
     </div>
     <div class="col-6 col-lg-3">
         <div class="stat-card">
+            <div class="stat-icon" style="background-color: var(--bs-indigo); color: white;"><i class="bi bi-person-bounding-box"></i></div>
+            <div class="stat-value">{{ number_format($stats['today_visitors']) }}</div>
+            <div class="stat-label">Today's Unique Visitors</div>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="stat-card">
+            <div class="stat-icon" style="background-color: var(--bs-teal); color: white;"><i class="bi bi-globe"></i></div>
+            <div class="stat-value">{{ number_format($stats['total_visitors']) }}</div>
+            <div class="stat-label">Total Unique Visitors</div>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="stat-card">
             <div class="stat-icon bg-green"><i class="bi bi-cash-stack"></i></div>
             <div class="stat-value">₹{{ number_format($stats['total_payments']) }}</div>
             <div class="stat-label">Total Payments</div>

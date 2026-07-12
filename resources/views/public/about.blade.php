@@ -1,5 +1,9 @@
 @extends('layouts.public')
-@section('title', 'About Us')
+
+@section('title', 'About Us | Ashutosh Enterprises')
+@section('meta_description', 'Learn about Ashutosh Enterprises, India\'s most trusted manpower and labour supply agency with over 15 years of experience delivering quality workforce.')
+@section('meta_keywords', 'about ashutosh enterprises, manpower agency history, labour contractors in delhi, trusted manpower supply')
+
 @section('content')
 <div class="page-header">
     <div class="container">

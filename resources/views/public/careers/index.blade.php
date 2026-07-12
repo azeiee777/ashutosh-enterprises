@@ -1,5 +1,9 @@
 @extends('layouts.public')
-@section('title', 'Careers')
+
+@section('title', 'Careers & Job Opportunities | Ashutosh Enterprises')
+@section('meta_description', 'Looking for a job in construction, warehousing, or factory work? Apply for skilled and unskilled labour jobs at Ashutosh Enterprises today.')
+@section('meta_keywords', 'jobs in construction, warehouse jobs, labour jobs, apply for manpower jobs')
+
 @section('content')
 <div class="page-header"><div class="container"><h1>Careers</h1><nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li><li class="breadcrumb-item active">Careers</li></ol></nav></div></div>
 <section class="section"><div class="container"><div class="row g-5">

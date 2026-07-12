@@ -1,7 +1,8 @@
 @extends('layouts.public')
 
-@section('title', 'Home')
-@section('meta_description', 'Ashutosh Enterprises - India\'s trusted labour supply contractor. We provide skilled, semi-skilled, and unskilled manpower for construction, factories, and warehouses.')
+@section('title', 'Best Labour Supply Contractor in India')
+@section('meta_description', 'Ashutosh Enterprises is the #1 Labour Supply Contractor in India. We provide verified skilled, semi-skilled, and unskilled manpower for construction and factories.')
+@section('meta_keywords', 'labour supply contractor, manpower supply agency, construction workers india, factory labour, skilled manpower, ashutosh enterprises')
 
 @section('content')
 {{-- Hero Section --}}

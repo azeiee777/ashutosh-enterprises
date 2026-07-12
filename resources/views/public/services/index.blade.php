@@ -1,5 +1,9 @@
 @extends('layouts.public')
-@section('title', 'Services')
+
+@section('title', 'Our Manpower Services | Labour Supply')
+@section('meta_description', 'Explore our range of manpower services including skilled, semi-skilled, and unskilled labour for construction sites, warehouses, and factories across India.')
+@section('meta_keywords', 'manpower services, skilled labour supply, unskilled workers, construction manpower, warehouse staff agency')
+
 @section('content')
 <div class="page-header"><div class="container"><h1>Our Services</h1><nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li><li class="breadcrumb-item active">Services</li></ol></nav></div></div>
 <section class="section"><div class="container"><div class="section-heading animate-on-scroll"><span class="section-badge">What We Offer</span><h2>Complete Manpower Solutions</h2><p>From skilled technicians to general labour, we cover all your workforce needs</p></div>

@@ -4,9 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="@yield('meta_description', 'Ashutosh Enterprises - Leading Labour Supply Contractor providing skilled, semi-skilled and unskilled manpower solutions for construction, factories, and warehouses across India.')">
-    <meta name="keywords" content="labour supply, manpower contractor, construction labour, skilled workers, factory workers, warehouse staff">
+    <meta name="keywords" content="@yield('meta_keywords', 'labour supply, manpower contractor, construction labour, skilled workers, factory workers, warehouse staff, ashutosh enterprises')">
     <meta name="author" content="Ashutosh Enterprises">
     <title>@yield('title', 'Ashutosh Enterprises') | Labour Supply Contractor</title>
+
+    <!-- Canonical URL to prevent duplicate content issues -->
+    <link rel="canonical" href="{{ url()->current() }}" />
+
+    <!-- Open Graph (Facebook/LinkedIn) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:title" content="@yield('title', 'Ashutosh Enterprises') | Labour Supply Contractor">
+    <meta property="og:description" content="@yield('meta_description', 'Leading Labour Supply Contractor providing skilled, semi-skilled and unskilled manpower solutions across India.')">
+    <meta property="og:image" content="{{ asset('images/og-image.jpg') }}"> <!-- Add default OG image later if needed -->
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="@yield('title', 'Ashutosh Enterprises') | Labour Supply Contractor">
+    <meta name="twitter:description" content="@yield('meta_description', 'Leading Labour Supply Contractor providing skilled, semi-skilled and unskilled manpower solutions across India.')">
+
+    <!-- Schema.org LocalBusiness JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Ashutosh Enterprises",
+      "image": "{{ asset('images/logo.png') }}",
+      "@id": "{{ url('/') }}",
+      "url": "{{ url('/') }}",
+      "telephone": "+917618876215",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "123 Business Park, Industrial Area",
+        "addressLocality": "New Delhi",
+        "postalCode": "110001",
+        "addressCountry": "IN"
+      }
+    }
+    </script>
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23F59E0B'/%3E%3Ctext x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' fill='%230F172A' font-family='Arial' font-weight='bold' font-size='18'%3EA%3C/text%3E%3C/svg%3E">
