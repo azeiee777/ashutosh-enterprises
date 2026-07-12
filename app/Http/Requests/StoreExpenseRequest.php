@@ -14,7 +14,7 @@ class StoreExpenseRequest extends FormRequest
     {
         $this->merge([
             'amount' => $this->input('amount', 0),
-            'category' => $this->input('category', ExpenseCategory::MISC->value),
+            'category' => $this->input('category', ExpenseCategory::MISCELLANEOUS->value),
         ]);
     }
 

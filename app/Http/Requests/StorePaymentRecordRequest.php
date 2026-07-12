@@ -15,7 +15,7 @@ class StorePaymentRecordRequest extends FormRequest
     {
         $this->merge([
             'amount' => $this->input('amount', 0),
-            'payment_head' => $this->input('payment_head', PaymentHead::ADVANCE->value),
+            'payment_head' => $this->input('payment_head', PaymentHead::ADVANCE_FROM_CLIENT->value),
             'payment_method' => $this->input('payment_method', PaymentMethod::CASH->value),
         ]);
     }
