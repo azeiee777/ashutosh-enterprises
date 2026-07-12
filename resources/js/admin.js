@@ -33,13 +33,25 @@ document.addEventListener('DOMContentLoaded', () => {
     // Sidebar toggle
     const sidebarToggle = document.getElementById('sidebarToggle');
     const sidebar = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+    
     if (sidebarToggle && sidebar) {
         sidebarToggle.addEventListener('click', () => {
             if (window.innerWidth <= 991) {
                 sidebar.classList.toggle('show');
+                if (sidebarOverlay) sidebarOverlay.classList.toggle('show');
             } else {
                 sidebar.classList.toggle('collapsed');
                 document.body.classList.toggle('sidebar-collapsed');
+            }
+        });
+    }
+
+    if (sidebarOverlay) {
+        sidebarOverlay.addEventListener('click', () => {
+            if (window.innerWidth <= 991) {
+                sidebar.classList.remove('show');
+                sidebarOverlay.classList.remove('show');
             }
         });
     }

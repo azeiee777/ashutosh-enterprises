@@ -12,6 +12,9 @@
 </head>
 <body>
     <div class="admin-wrapper">
+        {{-- Mobile Overlay --}}
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        
         {{-- Sidebar --}}
         <aside class="admin-sidebar" id="sidebar">
             <a href="{{ route('admin.dashboard') }}" class="sidebar-brand">
